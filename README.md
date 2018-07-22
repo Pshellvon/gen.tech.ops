@@ -17,6 +17,10 @@ WP-CLI          1.5.1
 
 # Create .env file from example
 
+Set WP_URL to your URL
+
+Please, do not store secrets in public.
+
 ```
 MYSQL_ROOT_PASSWORD=password
 
