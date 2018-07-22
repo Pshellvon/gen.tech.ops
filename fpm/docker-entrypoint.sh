@@ -20,7 +20,7 @@ chown -R 33:33 /var/www/${MYSQL_DATABASE}/wp-content
 if [ -z "$(ls -A /var/www/wordpress | grep -v wp-content)" ]; then
    echo "* Web root directory is empty. Install Wordpress"
    wp core download --version=${WP_VERSION}
-   wp core config --dbname="${MYSQL_DATABASE}" --dbuser="${MYSQL_USER}" --dbpass="${MYSQL_WP_PASSWORD}" --dbhost="${MYQSL_MASTER}" --dbprefix=wp_
+   wp core config --dbname="${MYSQL_DATABASE}" --dbuser="${MYSQL_USER}" --dbpass="${MYSQL_WP_PASSWORD}" --dbhost="${MYSQL_MASTER}" --dbprefix=wp_
    wp core install --url="${WP_URL}" --title="${WP_TITLE}" --admin_user="${WP_ADMIN_USERNAME}" --admin_password="${WP_ADMIN_PASSWORD}" --admin_email="${WP_ADMIN_EMAIL}"
 else
    echo "* Wordpres directory is not empty. Nothing more to do."
