@@ -46,11 +46,10 @@ services:
       - "MYSQL_USER=${MYSQL_USER}"
       - "MYSQL_DATABASE=${MYSQL_DATABASE}"
       - "WP_WAIT_MYSQL=${WP_WAIT_MYSQL}"
-    ports:
-      - "9000:9000"
+#    ports:
+#      - "9000"
     networks:
       - backend
-      - frontend
     depends_on:
       - "mysql_master"
       - "mysql_slave"
@@ -65,8 +64,8 @@ services:
     hostname: mysql_master
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
-    ports:
-      - "3306:3306"
+#    ports:
+#      - "3306"
     volumes:
       - "db-master:/var/lib/mysql/:rw"
       - "./mysql/configs/mysql-master/master.cnf:/etc/mysql/conf.d/master.cnf"
@@ -80,8 +79,8 @@ services:
     hostname: mysql_slave
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
-    ports:
-      - "3307:3306"
+#    ports:
+#      - "3306"
     depends_on:
        - mysql_master
     volumes:
