@@ -36,7 +36,7 @@ MYSQL_SLAVE=mysql_slave
 
 MYSQL_INIT=mysql_configure
 MYSQL_INIT_WAIT_SEC=30
-MYQSL_MASTER=mysql_master
+MYSQL_MASTER=mysql_master
 
 WP_VERSION=latest
 WP_URL=192.168.1.143
