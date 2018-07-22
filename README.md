@@ -2,12 +2,12 @@
 # Prerequisites
 
 ```
-KUbuntu         18:04
+K(Ubuntu)       18:04
 Docker          18.06.0-ce, build 0ffa825
 Docker-Compose  1.21.2, build a133471
 ```
 
-# Verions
+# Versions
 
 ```
 NGINX           nginx/1.15.0
