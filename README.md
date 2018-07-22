@@ -1,18 +1,27 @@
 
-Prerequisites:
+# Prerequisites
 
-KUbuntu         18:04
+```
+K(Ubuntu)       18:04
 Docker          18.06.0-ce, build 0ffa825
 Docker-Compose  1.21.2, build a133471
+```
 
-Verions:
+# Versions
 
+```
 NGINX           nginx/1.15.0
 PHP             7.1.20
 WP-CLI          1.5.1
+```
 
-Create .env file from example
+# Create .env file from example
 
+Set WP_URL to your URL
+
+Please, do not store secrets in public.
+
+```
 MYSQL_ROOT_PASSWORD=password
 
 MYSQL_USER=wordpress
@@ -36,3 +45,21 @@ WP_ADMIN_USERNAME=admin
 WP_ADMIN_PASSWORD=password
 WP_ADMIN_EMAIL=pshellvon@gmail.com
 WP_WAIT_MYSQL=40
+```
+
+# Create networks
+
+```
+sudo docker network create backend
+sudo docker network create frontend
+```
+
+
+# Run
+
+```
+git clone https://github.com/Pshellvon/gen.tech.ops.git
+cd gen.tech.ops
+sudo docker-compose up
+```
+
