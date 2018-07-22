@@ -47,19 +47,14 @@ WP_ADMIN_EMAIL=pshellvon@gmail.com
 WP_WAIT_MYSQL=40
 ```
 
-# Create networks
-
-```
-sudo docker network create backend
-sudo docker network create frontend
-```
-
 
 # Run
 
 ```
 git clone https://github.com/Pshellvon/gen.tech.ops.git
 cd gen.tech.ops
+sudo docker network create backend
+sudo docker network create frontend
 sudo docker-compose up
 ```
 
