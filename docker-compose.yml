@@ -1,0 +1,125 @@
+version: "3"
+services:
+
+  nginx:
+    build:
+      context: ./nginx/
+    restart: unless-stopped
+    hostname: nginx
+    ports:
+      - "80:80"
+    networks:
+      - frontend
+      - backend
+    volumes:
+      - "./nginx/wordpress/app:/var/www/wordpress:ro"
+      - "./nginx/wordpress/content:/var/www/wordpress/wp-content:ro"
+      - "./nginx/conf/nginx.conf:/nginx/conf/nginx.conf:ro"
+      - "./nginx/conf/000_wp.conf:/nginx/conf/000_wp.conf:ro"
+    restart: always
+    links:
+      - "fpm"
+    depends_on:
+      - "fpm"
+      - "mysql_master"
+      - "mysql_slave"
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sS http://127.0.0.1/ || exit 1"]
+      interval: 60s
+      timeout: 2s
+      retries: 2
+
+  fpm:
+    build:
+      context: ./fpm/
+    restart: unless-stopped
+    hostname: fpm
+    environment:
+      - "WP_VERSION=${WP_VERSION}"
+      - "WP_URL=${WP_URL}"
+      - "WP_TITLE=${WP_TITLE}"
+      - "WP_ADMIN_USERNAME=${WP_ADMIN_USERNAME}"
+      - "WP_ADMIN_PASSWORD=${WP_ADMIN_PASSWORD}"
+      - "WP_ADMIN_EMAIL=${WP_ADMIN_EMAIL}"
+      - "MYQSL_MASTER=${MYQSL_MASTER}"
+      - "MYSQL_WP_PASSWORD=${MYSQL_WP_PASSWORD}"
+      - "MYSQL_USER=${MYSQL_USER}"
+      - "MYSQL_DATABASE=${MYSQL_DATABASE}"
+      - "WP_WAIT_MYSQL=${WP_WAIT_MYSQL}"
+    ports:
+      - "9000:9000"
+    networks:
+      - backend
+      - frontend
+    depends_on:
+      - "mysql_master"
+      - "mysql_slave"
+    #//TODO Bad Way. Nginx cannot find user data, but fpm do.
+    volumes:
+      - "./nginx/wordpress/app:/var/www/wordpress"
+      - "./nginx/wordpress/content:/var/www/wordpress/wp-content"
+
+  mysql_master:
+    image: mysql:5.7
+    restart: unless-stopped
+    hostname: mysql_master
+    environment:
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+    ports:
+      - "3306:3306"
+    volumes:
+      - "db-master:/var/lib/mysql/:rw"
+      - "./mysql/configs/mysql-master/master.cnf:/etc/mysql/conf.d/master.cnf"
+      - "./mysql/configs/docker.cnf:/etc/mysql/conf.d/docker.cnf"
+    networks:
+      - backend
+
+  mysql_slave:
+    image: mysql:5.7
+    restart: unless-stopped
+    hostname: mysql_slave
+    environment:
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+    ports:
+      - "3307:3306"
+    depends_on:
+       - mysql_master
+    volumes:
+      - "./mysql/configs/mysql-slave/slave.cnf:/etc/mysql/conf.d/slave.cnf"
+      - "./mysql/configs/docker.cnf:/etc/mysql/conf.d/docker.cnf"
+      - "db-slave:/var/lib/mysql/:rw"
+    networks:
+      - backend
+
+  mysql_configure:
+    image: mysql:5.7
+    environment:
+      - "MYSQL_SLAVE_PASSWORD=${MYSQL_SLAVE_PASSWORD}"
+      - "MYSQL_MASTER_PASSWORD=${MYSQL_MASTER_PASSWORD}"
+      - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+      - "MYSQL_REPLICATION_USER=${MYSQL_REPLICATION_USER}"
+      - "MYSQL_REPLICATION_PASSWORD=${MYSQL_REPLICATION_PASSWORD}"
+      - "MYSQL_USER=${MYSQL_USER}"
+      - "MYSQL_DATABASE=${MYSQL_DATABASE}"
+      - "MYSQL_WP_PASSWORD=${MYSQL_WP_PASSWORD}"
+      - "MYQSL_MASTER=${MYQSL_MASTER}"
+      - "MYQSL_SLAVE=${MYQSL_SLAVE}"
+      - "MYSQL_INIT_WAIT_SEC=${MYSQL_INIT_WAIT_SEC}"
+    volumes:
+      - "./mysql/mysql_init.sh:/bin/mysql_init.sh"
+    depends_on:
+      - "mysql_master"
+      - "mysql_slave"
+    networks:
+      - backend
+    command: /bin/bash /bin/mysql_init.sh
+
+networks:
+  frontend:
+    external: true
+  backend:
+    external: false
+
+volumes:
+  db-slave:
+  db-master:

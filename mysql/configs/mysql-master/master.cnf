@@ -1,0 +1,8 @@
+[mysqld]
+server-id = 1
+log_bin = /var/lib/mysql/mysql-bin.log
+log-slave-updates = 1
+datadir = /var/lib/mysql/
+innodb_flush_log_at_trx_commit = 2
+innodb_flush_method = O_DIRECT
+explicit_defaults_for_timestamp
