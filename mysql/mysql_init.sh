@@ -1,6 +1,9 @@
 #!/bin/bash
 BASE_PATH=$(dirname $0)
 
+#Check variables before run
+set -u
+
 #Give 30 seconds for master and slave to come up
 echo
 echo "---------------------------------------------------------------------"

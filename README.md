@@ -13,6 +13,7 @@ Docker-Compose  1.21.2, build a133471
 NGINX           nginx/1.15.0
 PHP             7.1.20
 WP-CLI          1.5.1
+MySQL           Ver 14.14 Distrib 5.7.22, for Linux (x86_64)
 ```
 
 # Create .env file from example
@@ -36,8 +37,8 @@ MYSQL_SLAVE=mysql_slave
 
 MYSQL_INIT=mysql_configure
 MYSQL_INIT_WAIT_SEC=30
-MYSQL_MASTER=mysql_master
 
+MYSQL_MASTER=mysql_master
 WP_VERSION=latest
 WP_URL=192.168.1.143
 WP_TITLE="BlogZis"

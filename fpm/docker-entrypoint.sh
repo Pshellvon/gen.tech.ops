@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#Check variables before run
+set -u
+
 #CHECK_WP_INSTALLED=`mysqlshow --user=root --password=password --host mysql_master wordpress | grep -o wp_options`
 echo "---------------------------------------------------------------------"
 echo "---------------------  * Wait 40 sec for MySQL  ---------------------"
@@ -15,7 +18,6 @@ echo "---------------------"
 echo
 
 chown -R 33:33 /var/www/${MYSQL_DATABASE}
-chown -R 33:33 /var/www/${MYSQL_DATABASE}/wp-content
 
 if [ -z "$(ls -A /var/www/wordpress | grep -v wp-content)" ]; then
    echo "* Web root directory is empty. Install Wordpress"
