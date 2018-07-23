@@ -63,6 +63,7 @@ services:
     hostname: mysql_master
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+      - "MYSQL_ROOT_HOST=%"
 #    ports:
 #      - "3306"
     volumes:
@@ -78,6 +79,7 @@ services:
     hostname: mysql_slave
     environment:
       - "MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}"
+      - "MYSQL_ROOT_HOST=%"
 #    ports:
 #      - "3306"
     depends_on:
