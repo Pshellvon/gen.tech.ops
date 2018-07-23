@@ -12,8 +12,7 @@ services:
       - frontend
       - backend
     volumes:
-      - "./nginx/wordpress/app:/var/www/wordpress:ro"
-      - "./nginx/wordpress/content:/var/www/wordpress/wp-content:ro"
+      - "./nginx/wordpress/:/var/www/wordpress:ro"
       - "./nginx/conf/nginx.conf:/nginx/conf/nginx.conf:ro"
       - "./nginx/conf/000_wp.conf:/nginx/conf/000_wp.conf:ro"
     restart: always
@@ -53,10 +52,10 @@ services:
     depends_on:
       - "mysql_master"
       - "mysql_slave"
-    #//TODO Bad Way. Nginx cannot find user data, but fpm do.
+    #//TODO Find way to store user data and app separately
     volumes:
-      - "./nginx/wordpress/app:/var/www/wordpress"
-      - "./nginx/wordpress/content:/var/www/wordpress/wp-content"
+      - "./nginx/wordpress/:/var/www/wordpress"
+
 
   mysql_master:
     image: mysql:5.7

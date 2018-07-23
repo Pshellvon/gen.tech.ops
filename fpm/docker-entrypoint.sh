@@ -18,7 +18,6 @@ echo "---------------------"
 echo
 
 chown -R 33:33 /var/www/${MYSQL_DATABASE}
-chown -R 33:33 /var/www/${MYSQL_DATABASE}/wp-content
 
 if [ -z "$(ls -A /var/www/wordpress | grep -v wp-content)" ]; then
    echo "* Web root directory is empty. Install Wordpress"
