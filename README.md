@@ -5,7 +5,6 @@
 K(Ubuntu)       18:04
 Docker          18.06.0-ce, build 0ffa825
 Docker-Compose  1.21.2, build a133471
-mysql           Ver 14.14 Distrib 5.7.22, for Linux (x86_64)
 ```
 
 # Versions
@@ -14,6 +13,7 @@ mysql           Ver 14.14 Distrib 5.7.22, for Linux (x86_64)
 NGINX           nginx/1.15.0
 PHP             7.1.20
 WP-CLI          1.5.1
+MySQL           Ver 14.14 Distrib 5.7.22, for Linux (x86_64)
 ```
 
 # Create .env file from example
