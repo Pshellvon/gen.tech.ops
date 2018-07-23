@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#Check variables before run
+set -u
+
 #CHECK_WP_INSTALLED=`mysqlshow --user=root --password=password --host mysql_master wordpress | grep -o wp_options`
 echo "---------------------------------------------------------------------"
 echo "---------------------  * Wait 40 sec for MySQL  ---------------------"
